@@ -1,0 +1,20 @@
+theme = Catppuccin Mocha
+
+mouse-hide-while-typing = true
+clipboard-read = "allow"
+clipboard-paste-protection = false
+
+window-height = 36
+window-width = 160
+window-padding-x = 24
+window-padding-y = 24
+window-subtitle = working-directory
+
+split-divider-color = #02FFDD
+unfocused-split-opacity = 0.5
+
+font-family = "MesloGL Nerd Font"
+font-size = 15
+
+keybind = shift+enter=text:\n
+macos-option-as-alt = left

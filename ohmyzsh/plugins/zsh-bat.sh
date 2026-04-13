@@ -1,0 +1,1 @@
+git clone https://github.com/fdellwing/zsh-bat.git ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-bat
