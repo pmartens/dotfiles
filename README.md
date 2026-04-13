@@ -1,4 +1,4 @@
-# Awesome Dotfiles [![Awesome][2]][1]
+# Awesome Dotfiles
 
 A curated list of dotfiles resources. Inspired by the [awesome][3] list thing. Note that some articles or tools may look
 old or old-fashioned, but this usually means they're battle-tested and mature (like dotfiles themselves). Feel free to
