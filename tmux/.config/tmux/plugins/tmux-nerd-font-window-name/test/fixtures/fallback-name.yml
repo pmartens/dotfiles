@@ -1,0 +1,4 @@
+config:
+  fallback-icon: "?" # comments should be stripped
+  show-name: false
+  always-show-fallback-name: true
