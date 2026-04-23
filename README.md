@@ -54,7 +54,7 @@ All zsh‑snippets per app (interactief, adds snippets to `.zshrc`)
 ./bootstrap.sh --zsh-extend
 ```
 
-All zsh‑aliasblocks in `.zshrc`
+All zsh‑alias blocks in `.zshrc`
 ```bash
 ./bootstrap.sh --zsh-aliases
 ```
