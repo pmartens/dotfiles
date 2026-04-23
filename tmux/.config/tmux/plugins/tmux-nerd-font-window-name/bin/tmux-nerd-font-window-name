@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+
+CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$CURRENT_DIR/lib.sh"
+
+main() {
+  local name="$1"
+  local panes="$2"
+  # USER_CONFIG is set at the top of the script, but allow override via env var for testing
+  local user_config="${TMUX_NERD_FONT_USER_CONFIG:-$USER_CONFIG}"
+
+  # Retrieve the icon based on the name argument
+  local icon
+  icon="$(get_config_value icons "$name" "$user_config")"
+
+  # Fallback icon if no specific icon is found
+  local is_fallback=false
+  if [ "$icon" == "null" ] || [ -z "$icon" ]; then
+    local sem_version_icon
+    sem_version_icon="$(get_config_value config sem-version-icon "$user_config")"
+    if [[ "$name" =~ ^[0-9]+\.[0-9]+(\.[0-9]+)?$ ]] && [ "$sem_version_icon" != "null" ] && [ -n "$sem_version_icon" ]; then
+      icon="$sem_version_icon"
+    else
+      icon="$(get_config_value config fallback-icon "$user_config")"
+      is_fallback=true
+    fi
+  fi
+
+  # If multiple panes are open, add a multi-pane icon if available
+  if [ "$panes" -gt 1 ]; then
+    local multi_pane_icon
+    multi_pane_icon="$(get_config_value config multi-pane-icon "$user_config")"
+    if [ "$multi_pane_icon" != "null" ] && [ -n "$multi_pane_icon" ]; then
+      icon="$multi_pane_icon $icon"
+    fi
+  fi
+
+  # Check if the window name should be displayed and set icon position
+  local show_name
+  show_name="$(get_config_value config show-name "$user_config")"
+  if [ "$show_name" = "true" ]; then
+    local icon_position
+    icon_position="$(get_config_value config icon-position "$user_config")"
+    if [ "$icon_position" == "right" ]; then
+      icon="$name $icon"
+    else
+      icon="$icon $name"
+    fi
+  elif [ "$is_fallback" = "true" ]; then
+    local always_show_fallback_name
+    always_show_fallback_name="$(get_config_value config always-show-fallback-name "$user_config")"
+    if [ "$always_show_fallback_name" = "true" ]; then
+      local icon_position
+      icon_position="$(get_config_value config icon-position "$user_config")"
+      if [ "$icon_position" == "right" ]; then
+        icon="$name $icon"
+      else
+        icon="$icon $name"
+      fi
+    fi
+  fi
+
+  # Output the final icon
+  echo "$icon"
+}
+
+# Run main only when executed directly, not when sourced
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  main "$@"
+fi
